@@ -8,7 +8,6 @@ export default function TweetScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-      <Text>TweetScreen</Text>
       <TouchableOpacity style={styles.flexrow}>
          <Image style= {styles.avatar}
                  source={{
@@ -43,7 +42,7 @@ export default function TweetScreen() {
           <Text style={styles.tweetEngagementLabel}>  Likes </Text>
         </View>
       </View>
-      <View style={[styles.tweetEngagemen, styles.spaceAround]}>
+      <View style={[styles.tweetEngagement, styles.spaceAround]}>
       <TouchableOpacity style={styles.flexRow}>
                 <EvilIcons name="comment" size={32} color="gray" style={{ marginRight: 2}} />
                 <Text style={styles.textGray}>108</Text>

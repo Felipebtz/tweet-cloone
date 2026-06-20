@@ -6,13 +6,16 @@ import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 
 export default function TweetScreen({navigation}) {
+  function gotoProfile() {
+    navigation.navigate('Profile Screen');
+  }
   
 
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
       <TouchableOpacity style={styles.flexrow}
-      onPress={() => navigation.navigate('Profile Screen')}
+      onPress={gotoProfile}
       >
          <Image style= {styles.avatar}
                  source={{

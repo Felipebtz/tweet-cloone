@@ -4,16 +4,21 @@ import Entypo from '@expo/vector-icons/Entypo';
 
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
-export default function TweetScreen() {
+
+export default function TweetScreen({navigation}) {
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-      <TouchableOpacity style={styles.flexrow}>
+      <TouchableOpacity style={styles.flexrow}
+      onPress={() => navigation.navigate('Profile Screen')}
+      >
          <Image style= {styles.avatar}
                  source={{
                         uri: 'https://reactnative.dev/img/tiny_logo.png',
                       }}
-                      /> 
+                     />                    
       <View>
         <Text style={styles.tweetName}> Andre Madarang</Text>
         <Text style={styles.tweetHandle}>@drehimself</Text>

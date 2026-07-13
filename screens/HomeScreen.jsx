@@ -37,6 +37,10 @@ export default function HomeScreen({ navigation }) {
     getAllTweets();
   }
 
+  function handleEnd() {
+    console.log('End of list reached');
+  }
+
   // {
   // id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
   // title: 'First Item',
@@ -144,6 +148,11 @@ export default function HomeScreen({ navigation }) {
           ItemSeparatorComponent={() => <View style={styles.tweetSeparator} />}
           refreshing={isRefreshing}
           onRefresh={handleRefresh}
+          onEndReached={handleEnd}
+          onEndReachedThreshold={0}
+          ListFooterComponent={() => (
+          <ActivityIndicator size="large" color="gray" />
+        )}
         />
       )}
 

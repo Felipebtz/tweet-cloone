@@ -224,4 +224,3 @@ const styles = StyleSheet.create({
     borderBottomColor: '#e4e7eb',
   },
 });
-s

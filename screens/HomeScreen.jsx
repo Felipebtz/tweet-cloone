@@ -12,7 +12,7 @@ export default function HomeScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
-
+  const [page, setPage] = useState(1);
   useEffect(() => {
     getAllTweets();
   }, []);
@@ -21,7 +21,7 @@ export default function HomeScreen({ navigation }) {
     axios
       .get('http://192.168.0.102:8000/api/tweets')
       .then(response => {
-        setData(response.data);
+        setData(response.data.data);
         setIsLoading(false);
         setIsRefreshing(false);
       })
@@ -150,11 +150,13 @@ export default function HomeScreen({ navigation }) {
           onRefresh={handleRefresh}
           onEndReached={handleEnd}
           onEndReachedThreshold={0}
+          
           ListFooterComponent={() => (
           <ActivityIndicator size="large" color="gray" />
         )}
         />
       )}
+      {/*Ao final da lista mostra login Activitys */}
 
       <TouchableOpacity style={styles.floatingButton} onPress={() => gotoNewTweet()}>
         <AntDesign name="plus" size={26} color="white" />

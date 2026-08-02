@@ -35,6 +35,14 @@ export default function TweetScreen({navigation}) {
         <Text style={styles.tweetContent}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quisquam repellendus repellat reprehenderit voluptatibus animi labore! Voluptates, libero. Commodi cumque distinctio inventore aspernatur rerum unde ut voluptatum eveniet accusantium sapiente.
         </Text>
+        <View style={styles.tweetTimestampContainer}>
+          <Text style={styles.tweetTimestampText}> 10:33 a.m</Text>
+          <Text style={styles.tweetTimestampText}>@middot;</Text>
+          <Text style={styles.tweetTimestampText}>18 Sep.21</Text>
+          <Text style={styles.tweetTimestampText}>@middot;</Text>
+          <Text style={[styles.tweetTimestampText, styles.lunkColor]}></Text>
+        </View>
+
       </View>
       <View style={styles.tweetEngagement}>
         <View style={styles.flexRow}>

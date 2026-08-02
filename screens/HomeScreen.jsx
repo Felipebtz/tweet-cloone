@@ -12,7 +12,7 @@ export default function HomeScreen({ navigation }) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [page, setPage] = useState(1);
+  const [isAtEndOfScrolling, setIsAtEndOfScrolling] = useState(false);
   useEffect(() => {
     getAllTweets();
   }, [page]);
@@ -26,12 +26,18 @@ export default function HomeScreen({ navigation }) {
     axios
       .get(`http://192.168.0.102:8000/api/tweets?page=${page}`)
       .then(response => {
-        
+        {/* Se a página for 1, substitui o array */}
+        {/* Se a página for maior que 1, incrementa no array existente */}
+        {/*Se response.data.next.page for true entao nao é o final da lista */}
         if (page === 1) {
           setData(response.data.data);
         }
         else {
           setData([...data, ...response.data.data]);
+        }
+
+        if(response.data.next_page_url){
+          setIsAtEndOfScrolling(true);
         }
         setIsLoading(false);
         setIsRefreshing(false);
@@ -43,8 +49,10 @@ export default function HomeScreen({ navigation }) {
         setIsRefreshing(false);
       });
   }
-
+{/*Essa funcao ela é responsavel pelo o refresh ou seja definir a page o final da lista  */}
   function handleRefresh() {
+    setPage(1);
+    setIsAtEndOfScrolling(false);
     setIsRefreshing(true);
     getAllTweets();
   }
@@ -164,7 +172,7 @@ export default function HomeScreen({ navigation }) {
           onEndReached={handleEnd}
           onEndReachedThreshold={0}
           
-          ListFooterComponent={() => (
+          ListFooterComponent={() => !isAtEndOfScrolling && (
           <ActivityIndicator size="large" color="gray" />
         )}
         />

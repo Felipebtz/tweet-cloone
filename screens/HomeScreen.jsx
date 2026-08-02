@@ -15,16 +15,28 @@ export default function HomeScreen({ navigation }) {
   const [page, setPage] = useState(1);
   useEffect(() => {
     getAllTweets();
-  }, []);
+  }, [page]);
 
+{/* Page adicionado e setado pois é uma mudanca de estado e agora a api passa a trabalha sobre pages*/}
+ {/* Diferenca entre o setdata e o setData ... é que um substitui todo o array recebido, já o outro adiciona ao array existente 
+  * é como se fosse um push, adicionando mais elementos ao array existente.
+  * Acumula para novos elementos, e não substitui os antigos.
+   */}
   function getAllTweets() {
     axios
-      .get('http://192.168.0.102:8000/api/tweets')
+      .get(`http://192.168.0.102:8000/api/tweets?page=${page}`)
       .then(response => {
-        setData(response.data.data);
+        
+        if (page === 1) {
+          setData(response.data.data);
+        }
+        else {
+          setData([...data, ...response.data.data]);
+        }
         setIsLoading(false);
         setIsRefreshing(false);
       })
+
       .catch(error => {
         console.log(error);
         setIsLoading(false);
@@ -38,7 +50,8 @@ export default function HomeScreen({ navigation }) {
   }
 
   function handleEnd() {
-    console.log('End of list reached');
+    setPage(page + 1);
+    get
   }
 
   // {

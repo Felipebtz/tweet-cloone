@@ -13,6 +13,8 @@ export default function HomeScreen({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isAtEndOfScrolling, setIsAtEndOfScrolling] = useState(false);
+  const [page, setPage] = useState(1);
+  
   useEffect(() => {
     getAllTweets();
   }, [page]);
@@ -24,7 +26,7 @@ export default function HomeScreen({ navigation }) {
    */}
   function getAllTweets() {
     axios
-      .get(`http://192.168.0.102:8000/api/tweets?page=${page}`)
+      .get(`http://192.168.0.105:8000/api/tweets?page=${page}`)
       .then(response => {
         {/* Se a página for 1, substitui o array */}
         {/* Se a página for maior que 1, incrementa no array existente */}
@@ -59,7 +61,7 @@ export default function HomeScreen({ navigation }) {
 
   function handleEnd() {
     setPage(page + 1);
-    get
+    
   }
 
   // {
@@ -79,9 +81,10 @@ export default function HomeScreen({ navigation }) {
     navigation.navigate('Profile Screen');
   }
 
-  function gotoSingleTweet() {
-    navigation.navigate('Tweet Screen');
-  }
+    function gotoSingleTweet(tweetId) {
+      navigation.navigate('Tweet Screen', {
+        tweetId:  tweetId });
+    }
 
   function gotoNewTweet() {
     navigation.navigate('Tweet Screen');
@@ -111,7 +114,7 @@ export default function HomeScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.tweetContentContainer} onPress={gotoSingleTweet}>
+        <TouchableOpacity style={styles.tweetContentContainer} onPress={() => gotoSingleTweet(tweet.id)}>
           <Text style={styles.tweetContent}>
             {tweet.body}
           </Text>

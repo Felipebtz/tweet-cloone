@@ -1,11 +1,33 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Platform} from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Platform, ActivityIndicator} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Entypo from '@expo/vector-icons/Entypo';
-
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
+import axios from 'axios';
 
-export default function TweetScreen({navigation}) {
+
+export default function TweetScreen({route, navigation}) {
+  const [tweet, setTweet] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getTweet();
+  },[]);
+
+  function getTweet() {
+    axios
+    .get(`http://192.168.0.105:8000/api/tweets/${route.params.tweetId}`)
+      .then(response => {
+        
+       setTweet(response.data);
+
+       setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+        setIsLoading(false);
+      });
+    }
   function gotoProfile() {
     navigation.navigate('Profile Screen');
   }
@@ -13,6 +35,12 @@ export default function TweetScreen({navigation}) {
 
   return (
     <View style={styles.container}>
+      {isLoading ? (
+        <ActivityIndicator style={{ marginTop: 8}} size="large" color="gray" />
+      ) : (
+        <>
+
+      <Text>{route.params.tweetId}</Text>
       <View style={styles.profileContainer}>
       <TouchableOpacity style={styles.flexrow}
       onPress={gotoProfile}
@@ -40,7 +68,9 @@ export default function TweetScreen({navigation}) {
           <Text style={styles.tweetTimestampText}>@middot;</Text>
           <Text style={styles.tweetTimestampText}>18 Sep.21</Text>
           <Text style={styles.tweetTimestampText}>@middot;</Text>
-          <Text style={[styles.tweetTimestampText, styles.lunkColor]}></Text>
+          <Text style={[styles.tweetTimestampText, styles.lunkColor]}>
+            Twitter for Iphone
+          </Text>
         </View>
 
       </View>
@@ -79,6 +109,8 @@ export default function TweetScreen({navigation}) {
                 <Text style={styles.textGray}>108</Text>
           </TouchableOpacity>
       </View>
+      </>
+      )}
     </View>
   );
 }
@@ -126,6 +158,15 @@ const styles = StyleSheet.create ({
     color: 'gray',
     marginLeft: 6,
   },
+  tweetTimestampContainer:{
+    flexDirection: 'row',
+    marginTop: 12,
+  },
+
+  linkColor: {
+    color: '#1d9bf1',
+  },
+
   spaceAround: {
     justifyContent: 'space-around',
   },

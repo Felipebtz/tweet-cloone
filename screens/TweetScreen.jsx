@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react';
 import Entypo from '@expo/vector-icons/Entypo';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
-import axios from 'axios';
+import axiosConfig from '../helpers/axiosConfig';
+
+import { format } from 'date-fns';
+
 
 
 export default function TweetScreen({route, navigation}) {
@@ -16,8 +19,8 @@ export default function TweetScreen({route, navigation}) {
   
 
   function getTweet() {
-    axios
-    .get(`http://192.168.0.105:8000/api/tweets/${route.params.tweetId}`)
+    axiosConfig
+    .get(`tweets/${route.params.tweetId}`)
       .then(response => {
         console.log(response.data);
         
@@ -49,12 +52,12 @@ export default function TweetScreen({route, navigation}) {
       >
          <Image style= {styles.avatar}
                  source={{
-                        uri: 'https://reactnative.dev/img/tiny_logo.png',
+                        uri: tweet.user.avatar,
                       }}
                      />                    
       <View>
-        <Text style={styles.tweetName}> Andre Madarang</Text>
-        <Text style={styles.tweetHandle}>@drehimself</Text>
+        <Text style={styles.tweetName}>{tweet.user.name}</Text>
+        <Text style={styles.tweetHandle}>{tweet.user.username}</Text>
       </View>
       </TouchableOpacity>
       <TouchableOpacity>
@@ -63,12 +66,14 @@ export default function TweetScreen({route, navigation}) {
       </View>
       <View style={styles.tweetContentCotainer} >
         <Text style={styles.tweetContent}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quisquam repellendus repellat reprehenderit voluptatibus animi labore! Voluptates, libero. Commodi cumque distinctio inventore aspernatur rerum unde ut voluptatum eveniet accusantium sapiente.
+          {tweet.body}
         </Text>
         <View style={styles.tweetTimestampContainer}>
-          <Text style={styles.tweetTimestampText}> 10:33 a.m</Text>
+          <Text style={styles.tweetTimestampText}>
+            {format(new Date(tweet.created_at), 'h:mm a')}
+          </Text>
           <Text style={styles.tweetTimestampText}>@middot;</Text>
-          <Text style={styles.tweetTimestampText}>18 Sep.21</Text>
+          <Text style={styles.tweetTimestampText}>  {format(new Date(tweet.created_at), 'd MMM yy')}</Text>
           <Text style={styles.tweetTimestampText}>@middot;</Text>
           <Text style={[styles.tweetTimestampText, styles.lunkColor]}>
             Twitter for Iphone

@@ -4,7 +4,8 @@ import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Platform } from 'react-native';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import axios from 'axios';
+
+import axiosConfig from '../helpers/axiosConfig';
 import { formatDistanceToNowStrict } from 'date-fns';
 
 export default function HomeScreen({ navigation }) {

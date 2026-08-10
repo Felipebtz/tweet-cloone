@@ -13,11 +13,13 @@ export default function TweetScreen({route, navigation}) {
   useEffect(() => {
     getTweet();
   },[]);
+  
 
   function getTweet() {
     axios
     .get(`http://192.168.0.105:8000/api/tweets/${route.params.tweetId}`)
       .then(response => {
+        console.log(response.data);
         
        setTweet(response.data);
 

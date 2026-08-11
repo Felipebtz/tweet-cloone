@@ -23,7 +23,9 @@ export default function NewTweet( { navigation}) {
 
     })
       .then(response => {
-       navigation.navigate('Home1');
+       navigation.navigate('Home1', {
+        newTweetAdded: response.data,
+       });
        setIsLoading(false);
       })
       .catch(error => {
@@ -45,7 +47,9 @@ export default function NewTweet( { navigation}) {
           {isLoading && (
             <ActivityIndicator size="small" color="gray" style={{ marginRight: 8 }} />
           )}
-          <TouchableOpacity style={styles.tweetButton} onPress={sendTweet}>
+          <TouchableOpacity style={styles.tweetButton} onPress={sendTweet}
+          disabled={isLoading}
+          >
             <Text style={styles.tweetButtonText}>New Tweet</Text>
           </TouchableOpacity>
         </View>
@@ -67,7 +71,7 @@ export default function NewTweet( { navigation}) {
       </View>
     </View>
   );
-}
+
 
 const styles = StyleSheet.create({
   textGray: {

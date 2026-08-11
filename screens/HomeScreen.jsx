@@ -26,8 +26,8 @@ export default function HomeScreen({ navigation }) {
   * Acumula para novos elementos, e não substitui os antigos.
    */}
   function getAllTweets() {
-    axios
-      .get(`http://192.168.0.105:8000/api/tweets?page=${page}`)
+    axiosConfig
+      .get(`tweets?page=${page}`)
       .then(response => {
         {/* Se a página for 1, substitui o array */}
         {/* Se a página for maior que 1, incrementa no array existente */}
